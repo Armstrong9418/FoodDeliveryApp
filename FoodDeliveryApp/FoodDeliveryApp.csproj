@@ -17,4 +17,13 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\Admin\" />
+    <Folder Include="Views\AdminAccount\" />
+    <Folder Include="Views\Customer\" />
+    <Folder Include="Views\CustomerAccount\" />
+  </ItemGroup>
+
 </Project>
