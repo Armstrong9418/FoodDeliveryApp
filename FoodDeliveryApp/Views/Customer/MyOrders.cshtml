@@ -1,0 +1,59 @@
+﻿@model List<FoodDeliveryApp.Models.Order>
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    ViewData["Title"] = "My Orders";
+    var itemNames = (Dictionary<int, string>)ViewBag.ItemNames;
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info mt-3">
+            You have no orders yet.
+            <a asp-controller="Customer" asp-action="PlaceOrder">Place your first order</a>
+        </div>
+    }
+    else
+    {
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.OrderId</td>
+                        <td>@order.OrderDateTime.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            @foreach (var oi in order.OrderItems)
+                            {
+                                <div>@(itemNames.ContainsKey(oi.ItemId) ? itemNames[oi.ItemId] : "Item #" + oi.ItemId) x@(oi.Quantity)</div>
+                            }
+                        </td>
+                        <td>@order.Price.ToString("0.00")</td>
+                        <td>
+                            @{
+                                var badge = order.Status switch
+                                {
+                                    FoodDeliveryApp.Models.OrderStatus.Accepted => "bg-success",
+                                    FoodDeliveryApp.Models.OrderStatus.Rejected => "bg-danger",
+                                    _ => "bg-warning text-dark"
+                                };
+                            }
+                            <span class="badge @badge">@order.Status</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

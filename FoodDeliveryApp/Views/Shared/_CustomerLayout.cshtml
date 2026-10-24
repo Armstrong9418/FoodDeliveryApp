@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Food Delivery</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-success">
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Food Delivery</a>
+            <ul class="navbar-nav ms-auto">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Customer" asp-action="PlaceOrder">Place Order</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Customer" asp-action="MyOrders">My Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="CustomerAccount" asp-action="Logout">Logout</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="CustomerAccount" asp-action="Login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="CustomerAccount" asp-action="Register">Register</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
